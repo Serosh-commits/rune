@@ -38,11 +38,3 @@ cabal run
 # or
 make run
 ```
-
-## Philosophy
-
-- **No Comments**: The code is the documentation. If you can't read the types, you can't use the library.
-- **Performance**: `INLINE` everything. `BangPatterns` everywhere. `unsafeCoerce` where necessary.
-- **Evolution**: Rules shouldn't just be found; they should be bred.
-
-See `src/Rune.hs` for the truth.
