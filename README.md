@@ -1,2 +1,48 @@
 # rune
-Rune is a pure Haskell library that does one thing, extremely well: It learns and runs high-accuracy classification models entirely through an ever-growing set of pure, hand-forged, human-readable rules — without ever building traditional decision trees. You feed it examples one by one (or in batches). 
+
+Pure functional evolutionary rule learning. Haskell 98+.
+
+## Gist
+
+Rune is a high-performance, dependency-light library for rule-based machine learning. It combines **algorithms** with **AdaBoost** to forge robust decision forests from raw feature vectors.
+
+It is written in strict, optimized Haskell. It does not hold your hand.
+
+## Specs
+
+- **Engine**: Evolutionary rule induction with genetic recombination (AND/OR/NOT/InRange).
+- **Boosting**: Adaptive reweighting of rules based on coverage and error (AdaBoost-style).
+- **Types**: Heterogeneous predicates via GADTs. Boxed vectors + `unsafeCoerce` for speed.
+- **Persistence**: Custom bit-level serialization. No `binary` or `cereal` overhead.
+- **Deps**: `vector`, `unordered-containers`, `hashable`. That's it.
+
+## Usage
+
+```haskell
+import Rune
+
+-- 1. Sift raw data for weak learners
+let initial = sift_advanced data_points
+
+-- 2. Evolve and boost (100 generations)
+let model = train_loop_advanced 100 data_points initial
+
+-- 3. Infer
+let prediction = infer model feature_vector
+```
+
+## Build
+
+```bash
+cabal run
+# or
+make run
+```
+
+## Philosophy
+
+- **No Comments**: The code is the documentation. If you can't read the types, you can't use the library.
+- **Performance**: `INLINE` everything. `BangPatterns` everywhere. `unsafeCoerce` where necessary.
+- **Evolution**: Rules shouldn't just be found; they should be bred.
+
+See `src/Rune.hs` for the truth.
