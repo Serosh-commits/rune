@@ -1,0 +1,45 @@
+cabal-version: 1.12
+name:           rune
+version:        0.2.0.0
+build-type:     Simple
+
+library
+  exposed-modules:
+      Rune
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.14
+    , containers
+    , unordered-containers
+    , vector
+    , vector-algorithms
+    , hashable
+    , deepseq
+    , mtl
+    , primitive
+    , bytestring
+  default-language: Haskell2010
+  ghc-options: -O2 -Wall -Wno-unused-top-binds -Wno-name-shadowing -Wno-orphans
+
+executable rune-exe
+  main-is: Main.hs
+  other-modules:
+      Rune
+  hs-source-dirs:
+      app
+      src
+  ghc-options: -O2 -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.14
+    , rune
+    , containers
+    , unordered-containers
+    , vector
+    , vector-algorithms
+    , hashable
+    , deepseq
+    , mtl
+    , primitive
+    , bytestring
+  default-language: Haskell2010
