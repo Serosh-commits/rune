@@ -1,37 +1,31 @@
 # rune
 
-Pure functional evolutionary rule learning. Haskell 98+.
+A fast Haskell library for rule-based machine learning. I got tired of black-box models that you can't debug, so I built this. It uses evolutionary logic to find rules that actually make sense.
 
-## Gist
+### How it works
+It's basically a genetic algorithm that sifts through your data to find predicates (like `x > 5`). It then combines them using AND/OR gates and evolves them over several generations. It uses some `unsafeCoerce` magic internally to keep things fast without sacrificing too much safety at the API level.
 
-Rune is a high-performance, dependency-light library for rule-based machine learning. It combines **algorithms** with **AdaBoost** to forge robust decision forests from raw feature vectors.
+### Quick Start
+You'll need `cabal`. Just clone and run the demo:
+```bash
+make run
+```
 
-## Specs
-
-- **Engine**: Evolutionary rule induction with genetic recombination (AND/OR/NOT/InRange).
-- **Boosting**: Adaptive reweighting of rules based on coverage and error (AdaBoost-style).
-- **Types**: Heterogeneous predicates via GADTs. Boxed vectors + `unsafeCoerce` for speed.
-- **Persistence**: Custom bit-level serialization. No `binary` or `cereal` overhead.
-- **Deps**: `vector`, `unordered-containers`, `hashable`. That's it.
-
-## Usage
-
+If you want to use it in your own code:
 ```haskell
 import Rune
 
+-- Sift through data to find basic candidates
+let seed = sift_advanced training_data
 
-let initial = sift_advanced data_points
+-- Let them evolve for a while
+let model = train_loop_advanced 100 training_data seed
 
-let model = train_loop_advanced 100 data_points initial
-
-
-let prediction = infer model feature_vector
+-- Predict
+let res = infer model some_fv
 ```
 
-## Build
-
-```bash
-cabal run
-# or
-make run
-```
+### Why use this?
+- **Small**: Very few dependencies. Just the essentials like `vector` and `hashable`.
+- **Fast**: Hand-rolled bit-level serialization and strict evaluation for performance.
+- **Readable**: You can actually print the rules and see *why* the model made a choice.
